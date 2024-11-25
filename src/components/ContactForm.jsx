@@ -7,7 +7,6 @@ function ContactForm() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    const formData = new FormData(e.target);
     const response = await handleSubmit(e);
 
     if (response.ok) {
@@ -21,7 +20,7 @@ function ContactForm() {
     } else {
       Swal.fire({
         title: "Oops...",
-        text: "Algo salió mal. Por favor intenta de nuevo mas tarde.",
+        text: "Algo salió mal. Por favor intenta de nuevo más tarde.",
         icon: "error",
         confirmButtonColor: "#EC959C",
       });
@@ -81,7 +80,7 @@ function ContactForm() {
                 className="w-100"
                 disabled={state.submitting}
               >
-                Enviar
+                {state.submitting ? "Enviando..." : "Enviar"}
               </Button>
             </Form>
           </Col>
