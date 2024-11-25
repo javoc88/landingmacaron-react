@@ -30,7 +30,7 @@ function ProductGallery() {
       icon: "question",
       showCancelButton: true,
       confirmButtonColor: "#EC959C",
-      cancelButtonColor: "#d33",
+      cancelButtonColor: "#F8DC69",
       confirmButtonText: "Si, comprar ahora",
       cancelButtonText: "No por ahora",
     }).then((result) => {
