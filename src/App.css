@@ -188,7 +188,7 @@ body {
 
 /* Products Section */
 .products-section {
-  padding: 50px 0;
+  padding: 10px 0;
   position: relative;
   min-height: 100vh;
   display: flex;
@@ -201,7 +201,8 @@ body {
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   flex-basis: calc(33.33% - 1rem);
-  max-width: 400px;
+  max-height: max-content;
+  max-width: max-content;
 }
 
 .product-card:hover {
@@ -209,8 +210,9 @@ body {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
-.product-image {
-  height: 250px;
+.product-img {
+  height: 15rem;
+  width: max-content;
   object-fit: cover;
 }
 
