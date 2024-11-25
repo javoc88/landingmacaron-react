@@ -1,25 +1,42 @@
-import { Container, Row, Col, Form, Button } from 'react-bootstrap';
-import { useForm, ValidationError } from '@formspree/react';
+import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { useForm, ValidationError } from "@formspree/react";
+import Swal from "sweetalert2";
 
 function ContactForm() {
   const [state, handleSubmit] = useForm("YOUR_FORMSPREE_ID");
 
-  if (state.succeeded) {
-    return (
-      <Container className="py-5 text-center">
-        <h3>Gracias por contactarnos!</h3>
-        <p>Recibirás una respuesta pronto.</p>
-      </Container>
-    );
-  }
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const response = await handleSubmit(e);
+
+    if (response.ok) {
+      Swal.fire({
+        title: "¡Gracias por escribirnos!",
+        text: "Te contactaremos pronto.",
+        icon: "success",
+        confirmButtonColor: "#EC959C",
+      });
+      e.target.reset();
+    } else {
+      Swal.fire({
+        title: "Oops...",
+        text: "Algo salió mal. Por favor intenta de nuevo mas tarde.",
+        icon: "error",
+        confirmButtonColor: "#EC959C",
+      });
+    }
+  };
 
   return (
     <section id="contact" className="contact-section py-5">
-      <Container className='contact-form'>
+      <Container className="contact-form">
         <Row className="justify-content-center">
           <Col md={8} lg={6}>
-            <h2 className="text-center display-6 mb-4" data-aos="fade-up">Contáctanos y haz tu pedido</h2>
-            <Form onSubmit={handleSubmit} data-aos="fade-up">
+            <h2 className="text-center display-6 mb-4" data-aos="fade-up">
+              Contáctanos y haz tu pedido
+            </h2>
+            <Form onSubmit={onSubmit} data-aos="fade-up">
               <Form.Group className="mb-3">
                 <Form.Label>Nombre</Form.Label>
                 <Form.Control
