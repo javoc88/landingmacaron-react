@@ -1,7 +1,7 @@
 import { Container, Carousel, Card, Button } from "react-bootstrap";
 import { products } from "../data/products";
 import Swal from "sweetalert2";
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 function ProductGallery() {
   const [itemsPerSlide, setItemsPerSlide] = useState(3);
@@ -16,10 +16,10 @@ function ProductGallery() {
     };
 
     handleResize();
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
@@ -51,10 +51,19 @@ function ProductGallery() {
     });
   };
 
-  const chunks = [];
-  for (let i = 0; i < products.length; i += itemsPerSlide) {
-    chunks.push(products.slice(i, i + itemsPerSlide));
-  }
+  const getProductsForSlide = (startIndex) => {
+    const slide = [];
+    for (let i = 0; i < itemsPerSlide; i++) {
+      const productIndex = (startIndex + i) % products.length;
+      slide.push(products[productIndex]);
+    }
+    return slide;
+  };
+
+  const totalSlides = Math.ceil(products.length / itemsPerSlide);
+  const slides = Array.from({ length: totalSlides }, (_, index) =>
+    getProductsForSlide(index * itemsPerSlide)
+  );
 
   return (
     <section id="products" className="products-section bg-light">
@@ -67,19 +76,25 @@ function ProductGallery() {
           className="product-carousel"
           data-aos="fade-up"
         >
-          {chunks.map((chunk, index) => (
-            <Carousel.Item key={index}>
+          {slides.map((slide, slideIndex) => (
+            <Carousel.Item key={slideIndex}>
               <div className="d-flex justify-content-around">
-                {chunk.map((product) => (
+                {slide.map((product, productIndex) => (
                   <Card
-                    key={product.id}
+                    key={`${slideIndex}-${product.id}-${productIndex}`}
                     className="product-card m-2"
                   >
-                    <Card.Img className="product-img" variant="top" src={product.image} />
+                    <Card.Img
+                      className="product-img"
+                      variant="top"
+                      src={product.image}
+                    />
                     <Card.Body>
                       <Card.Title>{product.name}</Card.Title>
                       <Card.Text>{product.description}</Card.Text>
-                      <p className="h4 mb-3">${product.price}</p>
+                      <p className="h4 mb-3">
+                        ${new Intl.NumberFormat("es-CL").format(product.price)}
+                      </p>
                       <Button
                         variant="primary"
                         onClick={() => handleOrderClick(product)}
@@ -92,33 +107,6 @@ function ProductGallery() {
               </div>
             </Carousel.Item>
           ))}
-          {/* {[0, 1].map((page) => (
-            <Carousel.Item key={page}>
-              <div className="d-flex justify-content-around flex-wrap">
-                {products.slice(page * 3, (page + 1) * 3).map((product) => (
-                  <Card
-                    key={product.id}
-                    className="product-card m-2 flex-grow-1"
-                  >
-                    <Card.Img
-                      variant="top"
-                      src={product.image}
-                      className="product-image"
-                    />
-                    <Card.Body>
-                      <Card.Title>{product.name}</Card.Title>
-                      <p className="h4 mb-3">${product.price}</p>
-                      <Button 
-                        variant="primary" 
-                        onClick={() => handleOrderClick(product)}>
-                        Contáctanos
-                      </Button>
-                    </Card.Body>
-                  </Card>
-                ))}
-              </div>
-            </Carousel.Item>
-          ))} */}
         </Carousel>
       </Container>
     </section>
