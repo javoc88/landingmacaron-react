@@ -89,6 +89,9 @@ function ProductGallery() {
         <Carousel
           indicators={false}
           className="product-carousel"
+          interval={3000}
+          pause={"hover"}
+          controls={true}
           data-aos="fade-up"
         >
           {slides.map((slide, slideIndex) => (
