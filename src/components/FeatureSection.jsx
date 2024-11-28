@@ -29,16 +29,18 @@ function FeatureSection() {
   return (
     <section className="features-section" id="features">
       <Container>
-        <Row ref={ref}>
+        <Row className="g-4" ref={ref}>
           {features.map((feature, index) => (
-            <Col md={4} key={index}>
-              <div
-                className={`feature-card ${inView ? 'visible' : ''}`}
+            <Col xs={4} key={index}>
+              <div 
+                className={`feature-card text-center ${inView ? 'fade-up visible' : 'fade-up'}`}
                 style={{ transitionDelay: `${index * 200}ms` }}
               >
-                <div className="feature-icon">{feature.icon}</div>
-                <h3>{feature.title}</h3>
-                <p>{feature.description}</p>
+                <div className="feature-icon mb-2">
+                  {feature.icon}
+                </div>
+                <h3 className="feature-title h5 mb-2">{feature.title}</h3>
+                <p className="feature-description small mb-0">{feature.description}</p>
               </div>
             </Col>
           ))}
