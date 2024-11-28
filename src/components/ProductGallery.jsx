@@ -70,6 +70,13 @@ function ProductGallery() {
     getProductsForSlide(index * itemsPerSlide)
   );
 
+  const truncateText = (text, maxLength) => {
+    if (text.length > maxLength) {
+      return text.substring(0, maxLength) + "...";
+    }
+    return text;
+  };
+
   const handleShowModal = (product) => {
     setSelectedProduct(product);
     setShowModal(true);
@@ -109,7 +116,7 @@ function ProductGallery() {
                     />
                     <Card.Body>
                       <Card.Title>{product.name}</Card.Title>
-                      <Card.Text>{product.description}</Card.Text>
+                      <Card.Text>{truncateText(product.description, 30)}</Card.Text>
                       <p className="h4 mb-3">
                         ${new Intl.NumberFormat("es-CL").format(product.price)}
                       </p>
