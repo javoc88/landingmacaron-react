@@ -32,9 +32,12 @@ function ContactForm() {
       <Container className="contact-form">
         <Row className="justify-content-center">
           <Col md={8} lg={6}>
-            <h2 className="text-center display-6 mb-4" data-aos="fade-up">
-              Contáctanos y haz tu pedido
+            <h2 className="text-center display-6" data-aos="fade-up">
+              Contáctanos
             </h2>
+            <h3 className="text-center display-7 mb-4" data-aos="fade-up">
+              haz tu pedido aquí
+            </h3>
             <Form onSubmit={onSubmit} data-aos="fade-up">
               <Form.Group className="mb-3">
                 <Form.Label>Nombre</Form.Label>
@@ -42,7 +45,7 @@ function ContactForm() {
                   type="text"
                   name="name"
                   required
-                  placeholder="ej. Juan Perez"
+                  placeholder="Escribe tu nombre"
                 />
               </Form.Group>
               <Form.Group className="mb-3">
@@ -51,7 +54,7 @@ function ContactForm() {
                   type="email"
                   name="email"
                   required
-                  placeholder="ej. correo@mail.cl"
+                  placeholder="correo@mail.cl"
                 />
                 <ValidationError
                   prefix="Email"
@@ -66,7 +69,7 @@ function ContactForm() {
                   name="message"
                   required
                   rows={4}
-                  placeholder="ej. Quiero comprar deliciosos macarons"
+                  placeholder="Describe tu pedido"
                 />
                 <ValidationError
                   prefix="Message"

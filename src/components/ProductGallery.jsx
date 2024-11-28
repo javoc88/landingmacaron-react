@@ -1,10 +1,13 @@
 import { Container, Carousel, Card, Button } from "react-bootstrap";
 import { products } from "../data/products";
 import Swal from "sweetalert2";
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
+import ProductModal from "./ProductModal";
 
 function ProductGallery() {
   const [itemsPerSlide, setItemsPerSlide] = useState(3);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -16,17 +19,19 @@ function ProductGallery() {
     };
 
     handleResize();
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
   const handleOrderClick = (product) => {
     Swal.fire({
       title: product.name,
-      text: `Te gustaría ordenar ${product.name} por $${product.price}?`,
+      text: `Te gustaría ordenar ${product.name} por $${new Intl.NumberFormat(
+        "es-CL"
+      ).format(product.price)}?`,
       icon: "question",
       showCancelButton: true,
       confirmButtonColor: "#EC959C",
@@ -38,7 +43,7 @@ function ProductGallery() {
         const message =
           `¡Hola! Quisiera comprar:\n\n` +
           `${product.name}\n` +
-          `a $${product.price}\n\n` +
+          `a $${new Intl.NumberFormat("es-CL").format(product.price)}\n\n` +
           `Deseo saber los pasos a seguir para completar mi pedido.`;
 
         const phoneNumber = "56950879950";
@@ -51,10 +56,36 @@ function ProductGallery() {
     });
   };
 
-  const chunks = [];
-  for (let i = 0; i < products.length; i += itemsPerSlide) {
-    chunks.push(products.slice(i, i + itemsPerSlide));
-  }
+  const getProductsForSlide = (startIndex) => {
+    const slide = [];
+    for (let i = 0; i < itemsPerSlide; i++) {
+      const productIndex = (startIndex + i) % products.length;
+      slide.push(products[productIndex]);
+    }
+    return slide;
+  };
+
+  const totalSlides = Math.ceil(products.length / itemsPerSlide);
+  const slides = Array.from({ length: totalSlides }, (_, index) =>
+    getProductsForSlide(index * itemsPerSlide)
+  );
+
+  const truncateText = (text, maxLength) => {
+    if (text.length > maxLength) {
+      return text.substring(0, maxLength) + "...";
+    }
+    return text;
+  };
+
+  const handleShowModal = (product) => {
+    setSelectedProduct(product);
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setSelectedProduct(null);
+  };
 
   return (
     <section id="products" className="products-section bg-light">
@@ -65,61 +96,57 @@ function ProductGallery() {
         <Carousel
           indicators={false}
           className="product-carousel"
+          interval={3000}
+          pause={"hover"}
+          controls={true}
           data-aos="fade-up"
         >
-          {chunks.map((chunk, index) => (
-            <Carousel.Item key={index}>
+          {slides.map((slide, slideIndex) => (
+            <Carousel.Item key={slideIndex}>
               <div className="d-flex justify-content-around">
-                {chunk.map((product) => (
+                {slide.map((product, productIndex) => (
                   <Card
-                    key={product.id}
+                    key={`${slideIndex}-${product.id}-${productIndex}`}
                     className="product-card m-2"
                   >
-                    <Card.Img className="product-img" variant="top" src={product.image} />
+                    <Card.Img
+                      className="product-img"
+                      variant="top"
+                      src={product.image}
+                    />
                     <Card.Body>
                       <Card.Title>{product.name}</Card.Title>
-                      <Card.Text>{product.description}</Card.Text>
-                      <p className="h4 mb-3">${product.price}</p>
-                      <Button
-                        variant="primary"
-                        onClick={() => handleOrderClick(product)}
-                      >
-                        Comprar
-                      </Button>
+                      <Card.Text>{truncateText(product.description, 30)}</Card.Text>
+                      <p className="h4 mb-3">
+                        ${new Intl.NumberFormat("es-CL").format(product.price)}
+                      </p>
+                      <div className="d-flex gap-2">
+                        <Button
+                          variant="primary"
+                          onClick={() => handleOrderClick(product)}
+                        >
+                          Comprar
+                        </Button>
+                        <Button
+                          variant="outline-secondary"
+                          onClick={() => handleShowModal(product)}
+                        >
+                          Más detalles
+                        </Button>
+                      </div>
                     </Card.Body>
                   </Card>
                 ))}
               </div>
             </Carousel.Item>
           ))}
-          {/* {[0, 1].map((page) => (
-            <Carousel.Item key={page}>
-              <div className="d-flex justify-content-around flex-wrap">
-                {products.slice(page * 3, (page + 1) * 3).map((product) => (
-                  <Card
-                    key={product.id}
-                    className="product-card m-2 flex-grow-1"
-                  >
-                    <Card.Img
-                      variant="top"
-                      src={product.image}
-                      className="product-image"
-                    />
-                    <Card.Body>
-                      <Card.Title>{product.name}</Card.Title>
-                      <p className="h4 mb-3">${product.price}</p>
-                      <Button 
-                        variant="primary" 
-                        onClick={() => handleOrderClick(product)}>
-                        Contáctanos
-                      </Button>
-                    </Card.Body>
-                  </Card>
-                ))}
-              </div>
-            </Carousel.Item>
-          ))} */}
         </Carousel>
+
+        <ProductModal
+          product={selectedProduct}
+          show={showModal}
+          handleClose={handleCloseModal}
+        />
       </Container>
     </section>
   );
