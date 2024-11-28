@@ -2,9 +2,12 @@ import { Container, Carousel, Card, Button } from "react-bootstrap";
 import { products } from "../data/products";
 import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
+import ProductModal from "./ProductModal";
 
 function ProductGallery() {
   const [itemsPerSlide, setItemsPerSlide] = useState(3);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -26,7 +29,9 @@ function ProductGallery() {
   const handleOrderClick = (product) => {
     Swal.fire({
       title: product.name,
-      text: `Te gustaría ordenar ${product.name} por $${product.price}?`,
+      text: `Te gustaría ordenar ${product.name} por $${new Intl.NumberFormat(
+        "es-CL"
+      ).format(product.price)}?`,
       icon: "question",
       showCancelButton: true,
       confirmButtonColor: "#EC959C",
@@ -38,7 +43,7 @@ function ProductGallery() {
         const message =
           `¡Hola! Quisiera comprar:\n\n` +
           `${product.name}\n` +
-          `a $${product.price}\n\n` +
+          `a $${new Intl.NumberFormat("es-CL").format(product.price)}\n\n` +
           `Deseo saber los pasos a seguir para completar mi pedido.`;
 
         const phoneNumber = "56950879950";
@@ -64,6 +69,16 @@ function ProductGallery() {
   const slides = Array.from({ length: totalSlides }, (_, index) =>
     getProductsForSlide(index * itemsPerSlide)
   );
+
+  const handleShowModal = (product) => {
+    setSelectedProduct(product);
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setSelectedProduct(null);
+  };
 
   return (
     <section id="products" className="products-section bg-light">
@@ -95,12 +110,20 @@ function ProductGallery() {
                       <p className="h4 mb-3">
                         ${new Intl.NumberFormat("es-CL").format(product.price)}
                       </p>
-                      <Button
-                        variant="primary"
-                        onClick={() => handleOrderClick(product)}
-                      >
-                        Comprar
-                      </Button>
+                      <div className="d-flex gap-2">
+                        <Button
+                          variant="primary"
+                          onClick={() => handleOrderClick(product)}
+                        >
+                          Comprar
+                        </Button>
+                        <Button
+                          variant="outline-secondary"
+                          onClick={() => handleShowModal(product)}
+                        >
+                          Más detalles
+                        </Button>
+                      </div>
                     </Card.Body>
                   </Card>
                 ))}
@@ -108,6 +131,12 @@ function ProductGallery() {
             </Carousel.Item>
           ))}
         </Carousel>
+
+        <ProductModal
+          product={selectedProduct}
+          show={showModal}
+          handleClose={handleCloseModal}
+        />
       </Container>
     </section>
   );
