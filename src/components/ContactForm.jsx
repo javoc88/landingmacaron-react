@@ -1,30 +1,47 @@
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
-import { useForm, ValidationError } from "@formspree/react";
 import Swal from "sweetalert2";
 
 function ContactForm() {
-  const [state, handleSubmit] = useForm("YOUR_FORMSPREE_ID");
-
-  const onSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const response = await handleSubmit(e);
 
-    if (response.ok) {
-      Swal.fire({
-        title: "¡Gracias por escribirnos!",
-        text: "Te contactaremos pronto.",
-        icon: "success",
-        confirmButtonColor: "#EC959C",
+    const form = e.target;
+
+    Swal.fire({
+      title: "Enviando...",
+      text: "Por favor, espera mientras procesamos tu mensaje.",
+      icon: "info",
+      showConfirmButton: false,
+      allowOutsideClick: false,
+    });
+
+    fetch("https://formsubmit.co/ajax/0ddecb23dfb22bf423c51fc3ec14048c", {
+      method: "POST",
+      body: new FormData(form),
+    })
+      .then((response) => {
+        if (response.ok) {
+          Swal.fire({
+            title: "¡Mensaje Enviado!",
+            text: "¡Gracias por tu mensaje! Pronto nos pondremos en contacto contigo.",
+            icon: "success",
+            confirmButtonColor: "#EC959C",
+          }).then(() => {
+            form.reset();
+            window.location.reload();
+          });
+        } else {
+          throw new Error("Error al enviar el formulario.");
+        }
+      })
+      .catch(() => {
+        Swal.fire({
+          title: "Oops...",
+          text: "Hubo un problema al enviar el mensaje. Por favor, intenta nuevamente.",
+          icon: "error",
+          confirmButtonColor: "#EC959C",
+        });
       });
-      e.target.reset();
-    } else {
-      Swal.fire({
-        title: "Oops...",
-        text: "Algo salió mal. Por favor intenta de nuevo más tarde.",
-        icon: "error",
-        confirmButtonColor: "#EC959C",
-      });
-    }
   };
 
   return (
@@ -36,9 +53,27 @@ function ContactForm() {
               Contáctanos
             </h2>
             <h3 className="text-center display-7 mb-4" data-aos="fade-up">
-              haz tu pedido aquí
+              Haz tu pedido aquí
             </h3>
-            <Form onSubmit={onSubmit} data-aos="fade-up">
+            <Form onSubmit={handleSubmit} data-aos="fade-up">
+              <input
+                type="hidden"
+                name="_subject"
+                value="Nuevo pedido de macarons"
+              />
+              <input type="hidden" name="_captcha" value="false" />
+              <input type="hidden" name="_template" value="table" />
+              <input
+                type="hidden"
+                name="_autoresponse"
+                value="¡Gracias por tu mensaje! Pronto nos pondremos en contacto contigo."
+              />
+              <input type="hidden" name="_next" value="javascript:void(0);" />
+
+              <Form.Group className="d-none">
+                <Form.Control type="text" name="_honey" />
+              </Form.Group>
+
               <Form.Group className="mb-3">
                 <Form.Label>Nombre</Form.Label>
                 <Form.Control
@@ -48,6 +83,7 @@ function ContactForm() {
                   placeholder="Escribe tu nombre"
                 />
               </Form.Group>
+
               <Form.Group className="mb-3">
                 <Form.Label>Email</Form.Label>
                 <Form.Control
@@ -56,12 +92,17 @@ function ContactForm() {
                   required
                   placeholder="correo@mail.cl"
                 />
-                <ValidationError
-                  prefix="Email"
-                  field="email"
-                  errors={state.errors}
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Label>Teléfono (opcional)</Form.Label>
+                <Form.Control
+                  type="tel"
+                  name="phone"
+                  placeholder="+56 9 XXXX XXXX"
                 />
               </Form.Group>
+
               <Form.Group className="mb-3">
                 <Form.Label>Mensaje</Form.Label>
                 <Form.Control
@@ -71,19 +112,10 @@ function ContactForm() {
                   rows={4}
                   placeholder="Describe tu pedido"
                 />
-                <ValidationError
-                  prefix="Message"
-                  field="message"
-                  errors={state.errors}
-                />
               </Form.Group>
-              <Button
-                variant="primary"
-                type="submit"
-                className="w-100"
-                disabled={state.submitting}
-              >
-                {state.submitting ? "Enviando..." : "Enviar"}
+
+              <Button variant="primary" type="submit" className="w-100">
+                Enviar Mensaje
               </Button>
             </Form>
           </Col>
