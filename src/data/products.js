@@ -4,7 +4,8 @@ export const products = [
     name: "Base para relleno",
     description: "Base cremosa para rellenar macarons, tartas o postres.",
     price: 4990,
-    image: "https://images.unsplash.com/photo-1701884781051-ee7d500c8696?w=600",
+    image: "assets/img/base-para-relleno.jpg",
+    alt: "Base para relleno artesanal lista para usar en macarons o postres.",
     ingredients: "Crema de leche, azúcar glas, mantequilla, esencia de vainilla",
     allergens: "Contiene lácteos",
     weight: 500, // en gramos
@@ -16,7 +17,8 @@ export const products = [
     name: "Pack de 8 macarons",
     description: "Selección variada de 8 macarons artesanales, con sabores clásicos.",
     price: 7990,
-    image: "https://images.unsplash.com/photo-1702234670259-4424c995a451?w=600",
+    image: "assets/img/pack-de-8-macarons.jpg",
+    alt: "Pack de 8 macarons de diferentes colores y sabores.",
     ingredients: "Almendra molida, azúcar glas, claras de huevo, crema de mantequilla, colorantes naturales",
     allergens: "Contiene frutos secos (almendras), huevo, lácteos",
     weight: 200, // en gramos
@@ -28,7 +30,8 @@ export const products = [
     name: "Pack de 12 macarons",
     description: "Pack de 12 macarons artesanales, ideal para compartir en eventos o regalar.",
     price: 12990,
-    image: "https://images.unsplash.com/photo-1652555286866-1bef20014bc0?w=600",
+    image: "assets/img/pack-de-12-macarons.jpg",
+    alt: "Caja de 12 macarons artesanales con presentación elegante.",
     ingredients: "Almendra molida, azúcar glas, claras de huevo, rellenos variados según sabor",
     allergens: "Contiene frutos secos (almendras), huevo, lácteos",
     weight: 300, // en gramos
@@ -40,7 +43,8 @@ export const products = [
     name: "Relleno especial",
     description: "Relleno especial de chocolate amargo con toque de frambuesa.",
     price: 5990,
-    image: "https://images.unsplash.com/photo-1689618255209-c55d7a96dde6?w=600",
+    image: "assets/img/relleno-especial.jpg",
+    alt: "Relleno especial artesanal en frasco, ideal para macarons y postres.",
     ingredients: "Chocolate amargo, crema de leche, frambuesas frescas, azúcar",
     allergens: "Contiene lácteos, soja (en el chocolate)",
     weight: 400, // en gramos
@@ -53,6 +57,7 @@ export const products = [
     description: "Macarons personalizados con diseños únicos para eventos especiales.",
     price: 9990,
     image: "https://images.unsplash.com/photo-1697378594766-e22f529d7b36?w=600",
+    alt: "Macarons personalizados decorados con colores y diseños especiales.",
     ingredients: "Almendra molida, azúcar glas, claras de huevo, colorantes naturales, relleno a elección",
     allergens: "Contiene frutos secos (almendras), huevo, lácteos",
     weight: 300, // en gramos (12 macarons aprox.)
