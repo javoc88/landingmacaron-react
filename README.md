@@ -1,17 +1,15 @@
-# 🌐 Página de Aterrizaje para [@carolinabajague_delicakes](https://www.instagram.com/carolinabajague_delicakes/)
+## The documentation is available online here:
+https://around.createx.studio/docs/getting-started.html
+OR
+**Offline**: inside Around/docs folder
 
-¡Bienvenido al repositorio de la página de aterrizaje creada especialmente para [@carolinabajague_delicakes](https://www.instagram.com/carolinabajague_delicakes/)
-, el ganador de nuestro concurso! 🎉 El equipo de Codelium ha diseñado esta landing page para ayudar a impulsar su negocio o proyecto.
+## To download Figma files which include all design mockups follow the link below:
+https://drive.google.com/drive/folders/187kFSLX6BG7Q0WybwjQtd2QKt49wSBkb?usp=sharing
 
-## ✨ Características
+## Theme Installation Steps:
+1. Install Node.js and Npm (Node Package Manager)
+https://nodejs.org/en/
+2. Run `npm install` in your terminal to install all project dependencies
+3. After the installation is completed run `gulp` or `npm run build` to launch the project. It should automatically opens Around homepage in your browser (http://localhost:3000/)
 
-- **📱 Diseño Responsive:** Optimizada para dispositivos móviles y de escritorio.
-- **🖱️ Call to Action (CTA) Personalizado:** Diseñado para atraer la atención y fomentar la interacción.
-- **🧹 Código Limpio y Documentado:** Facilita la comprensión y modificación futura.
-- **🔍 Optimización SEO:** Implementación de buenas prácticas para mejorar la visibilidad en buscadores.
-
-## 🚀 Instrucciones de Uso
-
-1. Clona el repositorio:
-   ```bash
-   git clone https://github.com/codelium-code/carolinabajague_delicakes_LandingPage_1CTA.git
+**For more details see the documentation that comes with the theme.**
