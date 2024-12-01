@@ -113,6 +113,7 @@ function ProductGallery() {
                       className="product-img"
                       variant="top"
                       src={product.image}
+                      alt={product.alt}
                     />
                     <Card.Body>
                       <Card.Title>{product.name}</Card.Title>

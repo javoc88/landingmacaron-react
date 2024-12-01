@@ -19,7 +19,7 @@ function HeroSection() {
       <div className="hero-overlay"></div>
       <Container className="hero-content text-center text-white">
         <h1 className={`hero-title ${inView ? "fade-up visible" : "fade-up"}`}>
-          Macaron Bombom
+          Bonbon.Macaron
         </h1>
         <h2 className={`hero-subtitle ${inView ? "fade-up visible" : "fade-up"}`}>
           Pastelería artesanal

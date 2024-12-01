@@ -29,9 +29,9 @@ function Footer() {
             <div className="nav mx-n2 mx-lg-n4 mb-2 mb-sm-3 d-flex align-items-center flex-column fs-4">
               <a
                 className="nav-link px-0 justify-content-center"
-                href="mailto:contacto@sweetmacarons.com"
+                href="mailto:caroldelicakes@gmail.com"
               >
-                contacto@sweetmacarons.com
+                caroldelicakes@gmail.com
               </a>
               <a
                 className="nav-link px-0 justify-content-center"
@@ -42,7 +42,7 @@ function Footer() {
             </div>
             <div className="nav mx-n2 mt-auto d-flex justify-content-center">
               <a
-                href="https://wa.me/56950879950?text=Hello"
+                href="https://wa.me/56950879950?text=Hola vi tu página web y quiero contactarte."
                 className="social-link"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -50,7 +50,7 @@ function Footer() {
                 <FaWhatsapp size={40} />
               </a>
               <a
-                href="#"
+                href="@bonbon.macaron"
                 className="social-link"
                 target="_blank"
                 rel="noopener noreferrer"
